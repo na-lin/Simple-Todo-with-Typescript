@@ -7,7 +7,16 @@ interface Todo {
   text: string;
   completed: boolean;
 }
-const todos: Todo[] = [];
+const todos: Todo[] = readTodo();
+todos.forEach((todo) => {
+  createTodoElement(todo);
+});
+
+function readTodo(): Todo[] {
+  const todoRecord = localStorage.getItem("todos");
+  if (todoRecord === null) return [];
+  return JSON.parse(todoRecord);
+}
 
 function handleAddTodo(e: SubmitEvent) {
   e.preventDefault();
@@ -17,6 +26,7 @@ function handleAddTodo(e: SubmitEvent) {
     completed: false,
   };
   todos.push(newTodo);
+  localStorage.setItem("todos", JSON.stringify(todos));
   createTodoElement(newTodo);
 
   todoInput.value = "";

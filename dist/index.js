@@ -3,7 +3,16 @@ const todoInput = document.getElementById("todoInput");
 const submitButton = document.getElementById("btn");
 const form = document.getElementById("addTodoForm");
 const todoList = document.getElementById("todoList");
-const todos = [];
+const todos = readTodo();
+todos.forEach((todo) => {
+    createTodoElement(todo);
+});
+function readTodo() {
+    const todoRecord = localStorage.getItem("todos");
+    if (todoRecord === null)
+        return [];
+    return JSON.parse(todoRecord);
+}
 function handleAddTodo(e) {
     e.preventDefault();
     const newTodo = {
@@ -11,6 +20,7 @@ function handleAddTodo(e) {
         completed: false,
     };
     todos.push(newTodo);
+    localStorage.setItem("todos", JSON.stringify(todos));
     createTodoElement(newTodo);
     todoInput.value = "";
 }
