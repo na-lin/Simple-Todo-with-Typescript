@@ -8,6 +8,12 @@ function handleAddTodo(e: SubmitEvent) {
 
   const newTodo = document.createElement("li");
   newTodo.textContent = todoInput.value;
+
+  // add checkbox to each todo
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  newTodo.append(checkbox);
+
   todoList?.append(newTodo);
 
   todoInput.value = "";
